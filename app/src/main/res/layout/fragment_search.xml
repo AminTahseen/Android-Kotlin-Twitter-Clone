@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.loggedIn.search.SearchFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.threadssocialmediaapp.views.loggedIn.search.SearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <EditText
+            android:id="@+id/searchField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.6"
+            android:background="@drawable/edittext_rounded_grey"
+            android:drawableStart="@drawable/search_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/mona_sans_regular"
+            android:hint="Search..."
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/mona_sans_regular"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:lineHeight="50sp"
+            android:text="Recent search"
+            android:textColor="@color/greyWhite"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/searchField"
+            app:layout_constraintTop_toBottomOf="@id/searchField" />
+
+
+        <TextView
+            android:id="@+id/clearHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/mona_sans_regular"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:lineHeight="50sp"
+            android:text="Clear History"
+            android:textColor="@color/tagColor"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="@+id/searchField"
+            app:layout_constraintTop_toBottomOf="@id/searchField" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchHistoryRecycler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/searchField"
+            app:layout_constraintStart_toStartOf="@id/searchField"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:itemCount="5"
+            tools:listitem="@layout/search_recent_list_item"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

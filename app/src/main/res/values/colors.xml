@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#7f8c8d</color>
+    <color name="greyWhite">#A7B0B1</color>
+    <color name="tagColor">#3498db</color>
+    <color name="greyWhiteDark">#202020</color>
+    <color name="greyWhite2">#888B8C</color>
+    <color name="greyWhite3">#888B8C</color>
+    <color name="sd">#17191C</color>
+</resources>
