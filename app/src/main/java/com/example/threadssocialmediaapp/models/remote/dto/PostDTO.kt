@@ -17,7 +17,8 @@ data class PostDTO(
         val owner: Owner?,
         val publishDate: String?,
         val tags: List<String>?,
-        val text: String?
+        val text: String?,
+        val link :String?,
     ) {
         @JsonClass(generateAdapter = true)
         data class Owner(

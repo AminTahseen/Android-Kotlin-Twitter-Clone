@@ -12,23 +12,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.threadssocialmediaapp.R
 import com.example.threadssocialmediaapp.databinding.FragmentHomeBinding
-import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
-import com.example.threadssocialmediaapp.utils.gone
-import com.example.threadssocialmediaapp.utils.visible
 import com.example.threadssocialmediaapp.views.dialogs.FullPictureDialog
-import com.example.threadssocialmediaapp.views.loggedIn.home.adapters.HomeFeedAdapter
+import com.example.threadssocialmediaapp.views.common.FeedAdapter
 import com.paginate.Paginate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var homeBinding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var homeFeedAdapter: HomeFeedAdapter
+    private lateinit var homeFeedAdapter: FeedAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,7 +61,7 @@ class HomeFragment : Fragment() {
 
 
     private fun setAdapter() {
-        homeFeedAdapter = HomeFeedAdapter(
+        homeFeedAdapter = FeedAdapter(
             onImageClick = {
             },
             onPostClick = {

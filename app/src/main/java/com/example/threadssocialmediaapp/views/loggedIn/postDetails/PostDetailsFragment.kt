@@ -1,10 +1,14 @@
 package com.example.threadssocialmediaapp.views.loggedIn.postDetails
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +22,7 @@ import com.example.threadssocialmediaapp.databinding.FragmentPostDetailsBinding
 import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.utils.formatDateTime
 import com.example.threadssocialmediaapp.utils.gone
+import com.example.threadssocialmediaapp.utils.highlightMentions
 import com.example.threadssocialmediaapp.utils.visible
 import com.example.threadssocialmediaapp.views.loggedIn.home.adapters.TagsAdapter
 import com.example.threadssocialmediaapp.views.loggedIn.postDetails.adapter.CommentsAdapter
@@ -51,6 +56,7 @@ class PostDetailsFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun observeEvents() {
         lifecycleScope.launch {
             postDetailsViewModel.events.observe(viewLifecycleOwner) {
@@ -83,7 +89,7 @@ class PostDetailsFragment : Fragment() {
 
                     is PostDetailsEvents.GetComments -> {
                         Log.d("totalComments", it.comments.size.toString())
-                        postDetailsBinding.commentsTotal.text="${it.comments.size} Comments"
+                        postDetailsBinding.commentsTotal.text = "${it.comments.size} Comments"
                         commentsAdapter.addItems(it.comments)
                     }
 
@@ -104,6 +110,7 @@ class PostDetailsFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setPostDetails(post: PostDTO.Post) {
         postDetailsBinding.progressBar.gone()
         postDetailsBinding.noDataFound.gone()
@@ -114,7 +121,20 @@ class PostDetailsFragment : Fragment() {
         circularProgressDrawable.start()
         val fullName = "${post.owner?.firstName} ${post.owner?.lastName}"
         postDetailsBinding.userName.text = fullName
-        postDetailsBinding.postDescription.text = post.text
+        highlightMentions(
+            postDetailsBinding.postDescription,
+            post.text.toString().replaceFirstChar { it.uppercase() })
+
+        Log.d("postLink",post.link.toString())
+        if (post.link?.isEmpty() == true || post.link == null) {
+            postDetailsBinding.postLinkSection.gone()
+        } else {
+            postDetailsBinding.postLinkSection.visible()
+            postDetailsBinding.postLink.text = post.link
+        }
+        postDetailsBinding.postLink.setOnClickListener {
+            post.link?.let { it1 -> openLinkInBrowser(it1) }
+        }
         if (post.image?.isEmpty() == true) {
             postDetailsBinding.thumbnailCard.gone()
         } else {
@@ -143,5 +163,10 @@ class PostDetailsFragment : Fragment() {
             .setLoadingTriggerThreshold(1)
             .addLoadingListItem(true)
             .build()
+    }
+
+    private fun openLinkInBrowser(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }

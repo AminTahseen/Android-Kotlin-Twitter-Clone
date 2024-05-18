@@ -11,9 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.threadssocialmediaapp.R
-import com.example.threadssocialmediaapp.databinding.FragmentDummyBinding
 import com.example.threadssocialmediaapp.databinding.FragmentSearchListBinding
-import com.example.threadssocialmediaapp.views.loggedIn.home.adapters.HomeFeedAdapter
+import com.example.threadssocialmediaapp.views.common.FeedAdapter
 import com.paginate.Paginate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,7 +23,7 @@ class SearchListFragment : Fragment() {
 
     private lateinit var searchListBinding: FragmentSearchListBinding
     private val searchListViewModel: SearchListViewModel by viewModels()
-    private lateinit var homeFeedAdapter: HomeFeedAdapter
+    private lateinit var homeFeedAdapter: FeedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,9 +54,21 @@ class SearchListFragment : Fragment() {
                     is SearchListEvents.GetPosts -> {
                         val tag = arguments?.getString("searchedTag")
                         Log.d("postsssss", it.posts.size.toString())
-                        searchListBinding.textView2.text =
-                            "Showing ${it.posts.size} posts with '$tag'..."
+                        if (it.posts.isEmpty()) {
+                            searchListBinding.textView2.text = "No posts with '#$tag'..."
+                        } else {
+                            searchListBinding.textView2.text =
+                                "Showing ${it.posts.size} posts with '#$tag'..."
+                        }
                         homeFeedAdapter.addItems(it.posts)
+                    }
+
+                    SearchListEvents.OnBackPress -> {
+                        try {
+                            findNavController().popBackStack()
+                        } catch (_: Exception) {
+
+                        }
                     }
 
                     else -> {
@@ -69,7 +80,7 @@ class SearchListFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        homeFeedAdapter = HomeFeedAdapter(
+        homeFeedAdapter = FeedAdapter(
             onImageClick = {
             },
             onPostClick = {

@@ -1,4 +1,4 @@
-package com.example.threadssocialmediaapp.views.loggedIn.home.adapters
+package com.example.threadssocialmediaapp.views.common
 
 
 import android.view.LayoutInflater
@@ -11,17 +11,16 @@ import com.example.threadssocialmediaapp.databinding.HomeFeedItemBinding
 import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.utils.formatDateTime
 import com.example.threadssocialmediaapp.utils.gone
+import com.example.threadssocialmediaapp.utils.highlightMentions
 import com.example.threadssocialmediaapp.utils.visible
-import kotlinx.datetime.Instant
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import com.example.threadssocialmediaapp.views.loggedIn.home.adapters.TagsAdapter
 
-class HomeFeedAdapter(
+class FeedAdapter(
     val onImageClick: (imageURL: String) -> Unit,
     val onPostClick: (post: PostDTO.Post) -> Unit
 
 ) :
-    RecyclerView.Adapter<HomeFeedAdapter.HomeFeedViewHolder>() {
+    RecyclerView.Adapter<FeedAdapter.HomeFeedViewHolder>() {
     private val homeFeedList = ArrayList<PostDTO.Post>()
     private lateinit var binding: HomeFeedItemBinding
 
@@ -62,7 +61,11 @@ class HomeFeedAdapter(
 
             val fullName = "${post.owner?.firstName} ${post.owner?.lastName}"
             binding.userName.text = fullName
-            binding.postDescription.text = post.text.toString().replaceFirstChar { it.uppercase() }
+            //binding.postDescription.text = post.text.toString().replaceFirstChar { it.uppercase() }
+            highlightMentions(
+                binding.postDescription,
+                post.text.toString().replaceFirstChar { it.uppercase() })
+
             if (post.image?.isEmpty() == true) {
                 binding.thumbnailCard.gone()
             } else {

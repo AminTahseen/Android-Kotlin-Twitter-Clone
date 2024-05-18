@@ -16,11 +16,22 @@
         android:layout_height="match_parent"
         android:background="@color/black">
 
+
+        <ImageView
+            android:id="@+id/backIcon"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:onClick="@{()->viewModel.onBackPress()}"
+            android:padding="5dp"
+            android:src="@drawable/back_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/searchField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/searchField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/edittext_rounded_grey2"
@@ -37,7 +48,7 @@
             android:textColorHint="@color/greyWhite"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/backIcon"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/textView2"
@@ -51,7 +62,8 @@
             android:text=""
             android:textColor="@color/greyWhite"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/searchField"
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toStartOf="@+id/backIcon"
             app:layout_constraintTop_toBottomOf="@id/searchField" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -61,6 +73,8 @@
             android:layout_marginTop="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="4"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             tools:listitem="@layout/home_feed_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

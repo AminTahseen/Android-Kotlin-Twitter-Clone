@@ -55,4 +55,9 @@
             app:popExitAnim="@anim/nav_slide_out_right"
             />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.threadssocialmediaapp.views.loggedIn.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -9,6 +9,7 @@ import com.example.threadssocialmediaapp.models.paginate.PaginateRequest
 import com.example.threadssocialmediaapp.models.useCases.GetPostsByTagUseCase
 import com.example.threadssocialmediaapp.utils.calculateTotalPages
 import com.example.threadssocialmediaapp.views.loggedIn.home.HomeEvents
+import com.example.threadssocialmediaapp.views.loggedIn.postDetails.PostDetailsEvents
 import com.paginate.Paginate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -46,11 +47,14 @@ class SearchListViewModel @Inject constructor(
             }.collect {
                 isLoading = false
                 withContext(Dispatchers.Main) {
-                    Log.d("postsData", it.toString())
+                    if (it?.total!! <= limit) {
+                        hasLoadedAllItems = true
+                    } else {
+                        currentPage = (it?.page ?: 1) + 1
+                        hasLoadedAllItems =
+                            (it?.page ?: 1) >= calculateTotalPages(limit, it?.total!!)
+                    }
                     val items = it?.data
-                    currentPage = (it?.page ?: 1) + 1
-                    hasLoadedAllItems =
-                        (it?.page ?: 1) >= calculateTotalPages(limit, it?.total!!)
                     items?.let { posts ->
                         Log.d("postsWithTag", posts.size.toString())
                         Log.d("postDataIs", posts.toString())
@@ -61,6 +65,7 @@ class SearchListViewModel @Inject constructor(
             }
         }
     }
+    fun onBackPress() = callEvent(SearchListEvents.OnBackPress)
 
     private fun callEvent(events: SearchListEvents) {
         viewModelScope.launch {

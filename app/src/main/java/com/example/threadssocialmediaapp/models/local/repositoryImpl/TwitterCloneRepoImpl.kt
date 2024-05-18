@@ -17,11 +17,8 @@ class TwitterCloneRepoImpl(private val twitterCloneDao: TwitterCloneDao) :
             searchHistoryItem.searchHistoryTag,
             searchHistoryItem.searchedHistoryByUserId
         )
-        if (count == 0) {
-            twitterCloneDao.addToRecentSearchHistory(searchHistoryItem)
-            return flow { emit(1) }
-        } else {
-            return flow { emit(0) }
-        }
+        twitterCloneDao.addToRecentSearchHistory(searchHistoryItem)
+        return flow { emit(1) }
+
     }
 }

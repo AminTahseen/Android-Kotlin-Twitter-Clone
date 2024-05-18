@@ -50,6 +50,7 @@
         android:id="@+id/addComment"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/send_blue"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/commentField"

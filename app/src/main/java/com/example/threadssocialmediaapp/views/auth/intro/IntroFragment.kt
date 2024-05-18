@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.threadssocialmediaapp.R
 import com.example.threadssocialmediaapp.databinding.FragmentIntroBinding
-import com.example.threadssocialmediaapp.views.loggedIn.DashboardActivity
+import com.example.threadssocialmediaapp.views.loggedIn.dashboard.DashboardActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.lang.Exception

@@ -1,11 +1,13 @@
 package com.example.threadssocialmediaapp.views.loggedIn.search
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.PopupWindow
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -90,10 +92,40 @@ class SearchFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        searchHistoryAdapter = SearchHistoryAdapter {
-            navigate(it)
-        }
+        searchHistoryAdapter = SearchHistoryAdapter(
+            onItemClick = {
+                navigate(it)
+            },
+            onShowMenuClick = { id, view ->
+                showPopupMenu(view,id)
+            },
+        )
         searchBinding.searchHistoryRecycler.adapter = searchHistoryAdapter
     }
+
+    private fun showPopupMenu(view: View,id:Int) {
+        val popup = PopupWindow(activity)
+        val layout = layoutInflater.inflate(R.layout.search_popup_menu, null)
+        popup.contentView = layout
+        popup.isOutsideTouchable = true
+        popup.isFocusable = true
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        val offsetX = 0
+        val offsetY = view.height-40
+        popup.showAsDropDown(view, offsetX, offsetY)
+        layout.setOnClickListener {
+            activity?.let { it1 ->
+                showToast(
+                    it1,
+                    layoutInflater,
+                    "Removed from history",
+                    R.layout.custom_toast_blue_message
+                )
+            }
+            popup.dismiss()
+        }
+    }
+
 
 }
