@@ -41,13 +41,17 @@ class HomeViewModel @Inject constructor(
                 withContext(Dispatchers.Main) {
                     Log.d("postsData", it.toString())
                     val items = it?.data
-                    currentPage = (it?.page ?: 1) + 1
-                    hasLoadedAllItems =
-                        (it?.page ?: 1) >= calculateTotalPages(limit, it?.total!!)
-                    items?.let { posts ->
-                        Log.d("postsCount", posts.size.toString())
-                        sendEvent(HomeEvents.GetPosts(posts))
+                    if (it == null) {
                         sendEvent(HomeEvents.None)
+                    } else {
+                        currentPage = (it.page ?: 1) + 1
+                        hasLoadedAllItems =
+                            (it.page ?: 1) >= calculateTotalPages(limit, it.total!!)
+                        items?.let { posts ->
+                            Log.d("postsCount", posts.size.toString())
+                            sendEvent(HomeEvents.GetPosts(posts))
+                            sendEvent(HomeEvents.None)
+                        }
                     }
                 }
             }

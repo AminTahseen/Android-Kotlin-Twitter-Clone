@@ -1,7 +1,7 @@
 package com.example.threadssocialmediaapp.models.remote.apiInterface
 
-import com.example.threadssocialmediaapp.models.dto.CommentsDTO
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.CommentsDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,4 +20,11 @@ interface ApiInterface {
         @Query("limit") limit: Int,
         @Query("page") page: Int
     ): Response<CommentsDTO?>
+
+    @GET("tag/{id}/post")
+    suspend fun getPostsByTag(
+        @Path("id") tag: String,
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Response<PostDTO>
 }

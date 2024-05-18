@@ -1,5 +1,10 @@
 package com.example.threadssocialmediaapp.di
 
+import android.app.Application
+import androidx.room.Room
+import com.example.threadssocialmediaapp.models.local.TwitterCloneDatabase
+import com.example.threadssocialmediaapp.models.local.repository.TwitterCloneRepo
+import com.example.threadssocialmediaapp.models.local.repositoryImpl.TwitterCloneRepoImpl
 import com.example.threadssocialmediaapp.models.remote.apiInterface.ApiInterface
 import com.example.threadssocialmediaapp.models.remote.repository.CommentsRepo
 import com.example.threadssocialmediaapp.models.remote.repository.PostsRepo
@@ -84,5 +89,21 @@ class AppModule {
     @Singleton
     fun provideCommentsRepo(api: ApiInterface): CommentsRepo {
         return CommentsRepoImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTwitterCloneDatabase(app: Application): TwitterCloneDatabase {
+        return Room.databaseBuilder(
+            app,
+            TwitterCloneDatabase::class.java,
+            TwitterCloneDatabase.DATABASE_NAME
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTwitterCloneRepository(db: TwitterCloneDatabase): TwitterCloneRepo {
+        return TwitterCloneRepoImpl(db.twitterCloneDao)
     }
 }

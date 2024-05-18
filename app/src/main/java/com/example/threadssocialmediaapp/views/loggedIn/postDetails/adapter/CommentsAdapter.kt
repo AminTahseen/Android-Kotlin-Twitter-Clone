@@ -7,7 +7,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.threadssocialmediaapp.databinding.CommentsItemBinding
-import com.example.threadssocialmediaapp.models.dto.CommentsDTO
+import com.example.threadssocialmediaapp.models.remote.dto.CommentsDTO
 import com.example.threadssocialmediaapp.utils.formatDateTime
 
 
@@ -44,7 +44,7 @@ class CommentsAdapter :
             circularProgressDrawable.strokeWidth = 5f
             circularProgressDrawable.centerRadius = 30f
             circularProgressDrawable.start()
-            binding.commentText.text = comment.message
+            binding.commentText.text = comment.message.toString().replaceFirstChar { it.uppercase() }
             val fullName = "${comment.owner?.firstName} ${comment.owner?.lastName}"
             binding.userName.text = fullName
             Glide.with(binding.root).load(comment.owner?.picture)

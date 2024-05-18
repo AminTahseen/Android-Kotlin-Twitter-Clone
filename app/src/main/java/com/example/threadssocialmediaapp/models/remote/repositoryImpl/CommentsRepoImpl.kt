@@ -1,7 +1,7 @@
 package com.example.threadssocialmediaapp.models.remote.repositoryImpl
 
 import android.util.Log
-import com.example.threadssocialmediaapp.models.dto.CommentsDTO
+import com.example.threadssocialmediaapp.models.remote.dto.CommentsDTO
 import com.example.threadssocialmediaapp.models.paginate.PaginateCommentsRequest
 import com.example.threadssocialmediaapp.models.remote.apiInterface.ApiInterface
 import com.example.threadssocialmediaapp.models.remote.repository.CommentsRepo

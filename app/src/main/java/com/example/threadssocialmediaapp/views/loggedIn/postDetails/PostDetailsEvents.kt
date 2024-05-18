@@ -1,7 +1,7 @@
 package com.example.threadssocialmediaapp.views.loggedIn.postDetails
 
-import com.example.threadssocialmediaapp.models.dto.CommentsDTO
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.CommentsDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 
 sealed class PostDetailsEvents {
     data object OnBackPress : PostDetailsEvents()

@@ -1,6 +1,6 @@
 package com.example.threadssocialmediaapp.models.useCases
 
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.models.paginate.PaginateRequest
 import com.example.threadssocialmediaapp.models.remote.repository.PostsRepo
 import kotlinx.coroutines.flow.Flow

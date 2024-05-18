@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.threadssocialmediaapp.R
 import com.example.threadssocialmediaapp.databinding.FragmentPostDetailsBinding
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.utils.formatDateTime
 import com.example.threadssocialmediaapp.utils.gone
 import com.example.threadssocialmediaapp.utils.visible

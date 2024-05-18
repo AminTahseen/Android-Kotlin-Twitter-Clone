@@ -8,7 +8,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.threadssocialmediaapp.databinding.HomeFeedItemBinding
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.utils.formatDateTime
 import com.example.threadssocialmediaapp.utils.gone
 import com.example.threadssocialmediaapp.utils.visible
@@ -62,7 +62,7 @@ class HomeFeedAdapter(
 
             val fullName = "${post.owner?.firstName} ${post.owner?.lastName}"
             binding.userName.text = fullName
-            binding.postDescription.text = post.text
+            binding.postDescription.text = post.text.toString().replaceFirstChar { it.uppercase() }
             if (post.image?.isEmpty() == true) {
                 binding.thumbnailCard.gone()
             } else {

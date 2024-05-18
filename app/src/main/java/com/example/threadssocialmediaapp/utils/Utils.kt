@@ -1,12 +1,25 @@
 package com.example.threadssocialmediaapp.utils
 
+import android.content.Context
+import android.graphics.PorterDuff
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentActivity
+import com.example.threadssocialmediaapp.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 inline fun <reified T> handleResponse(response: Response<T>): Flow<T?> = flow {
     if (response.isSuccessful) {
@@ -53,4 +66,29 @@ fun calculateTotalPages(limit: Int, total: Int): Int {
         Log.d("totalPages", ((total / limit) + 1).toString())
         (total / limit) + 1
     }
+}
+
+fun showToast(
+    activity: FragmentActivity,
+    inflater: LayoutInflater,
+    message: String,
+    bg: Int
+) {
+    val layout: View = inflater.inflate(
+        bg,
+        activity.findViewById(R.id.toast_root)
+    )
+    val text: TextView = layout.findViewById(R.id.toast_text)
+    text.text = message
+
+    val toast = Toast(activity)
+    toast.duration = Toast.LENGTH_SHORT
+    toast.view = layout
+    toast.show()
+}
+
+fun getCurrentDate(): String {
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    val currentDate = Date()
+    return dateFormat.format(currentDate)
 }

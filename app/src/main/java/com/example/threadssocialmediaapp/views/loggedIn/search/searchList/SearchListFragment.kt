@@ -1,4 +1,4 @@
-package com.example.threadssocialmediaapp.views.loggedIn.home
+package com.example.threadssocialmediaapp.views.loggedIn.search.searchList
 
 import android.os.Bundle
 import android.util.Log
@@ -11,49 +11,53 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.threadssocialmediaapp.R
-import com.example.threadssocialmediaapp.databinding.FragmentHomeBinding
-import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
-import com.example.threadssocialmediaapp.utils.gone
-import com.example.threadssocialmediaapp.utils.visible
-import com.example.threadssocialmediaapp.views.dialogs.FullPictureDialog
+import com.example.threadssocialmediaapp.databinding.FragmentDummyBinding
+import com.example.threadssocialmediaapp.databinding.FragmentSearchListBinding
 import com.example.threadssocialmediaapp.views.loggedIn.home.adapters.HomeFeedAdapter
 import com.paginate.Paginate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-    private lateinit var homeBinding: FragmentHomeBinding
-    private val homeViewModel: HomeViewModel by viewModels()
+class SearchListFragment : Fragment() {
+
+    private lateinit var searchListBinding: FragmentSearchListBinding
+    private val searchListViewModel: SearchListViewModel by viewModels()
     private lateinit var homeFeedAdapter: HomeFeedAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        searchListBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_search_list, container, false)
         // Inflate the layout for this fragment
-        homeBinding.viewModel = homeViewModel
+        searchListBinding.viewModel = searchListViewModel
         observeEvents()
+        getData()
         setAdapter()
-        return homeBinding.root
+        return searchListBinding.root
+    }
+
+    private fun getData() {
+        val searchedTag = arguments?.getString("searchedTag")
+        searchListBinding.searchField.setText(searchedTag)
+        searchedTag?.let {
+            searchListViewModel.getPostByTag(it)
+        }
     }
 
     private fun observeEvents() {
         lifecycleScope.launch {
-            homeViewModel.events.observe(viewLifecycleOwner) {
+            searchListViewModel.events.observe(viewLifecycleOwner) {
                 when (it) {
-                    is HomeEvents.GetPosts -> {
+                    is SearchListEvents.GetPosts -> {
+                        val tag = arguments?.getString("searchedTag")
+                        Log.d("postsssss", it.posts.size.toString())
+                        searchListBinding.textView2.text =
+                            "Showing ${it.posts.size} posts with '$tag'..."
                         homeFeedAdapter.addItems(it.posts)
-                        Log.d("postsCountItems", "recycler : ${homeFeedAdapter.itemCount}")
-                    }
-
-                    is HomeEvents.ShowFullImageDialog -> {
-                        FullPictureDialog(it.imageURL).show(
-                            childFragmentManager, "fullPicDialog"
-                        )
                     }
 
                     else -> {
@@ -64,7 +68,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun setAdapter() {
         homeFeedAdapter = HomeFeedAdapter(
             onImageClick = {
@@ -74,7 +77,7 @@ class HomeFragment : Fragment() {
                     val bundle = Bundle()
                     bundle.putString("postId", it.id)
                     findNavController().navigate(
-                        R.id.action_homeFragment_to_postDetailsFragment,
+                        R.id.action_searchListFragment_to_postDetailsFragment,
                         bundle
                     )
                 } catch (_: Exception) {
@@ -82,11 +85,10 @@ class HomeFragment : Fragment() {
                 }
             },
         )
-        homeBinding.homeFeedRecycler.adapter = homeFeedAdapter
-        Paginate.with(homeBinding.homeFeedRecycler, homeViewModel)
+        searchListBinding.homeFeedRecycler.adapter = homeFeedAdapter
+        Paginate.with(searchListBinding.homeFeedRecycler, searchListViewModel)
             .setLoadingTriggerThreshold(1)
             .addLoadingListItem(true)
             .build()
     }
-
 }

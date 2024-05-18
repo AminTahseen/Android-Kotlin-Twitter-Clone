@@ -1,4 +1,4 @@
-package com.example.threadssocialmediaapp.models.dto
+package com.example.threadssocialmediaapp.models.remote.dto
 
 import com.squareup.moshi.JsonClass
 

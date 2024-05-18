@@ -1,8 +1,8 @@
 package com.example.threadssocialmediaapp.models.useCases
 
 import android.util.Log
-import com.example.threadssocialmediaapp.models.dto.CommentsDTO
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.CommentsDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 import com.example.threadssocialmediaapp.models.paginate.PaginateCommentsRequest
 import com.example.threadssocialmediaapp.models.paginate.PaginateRequest
 import com.example.threadssocialmediaapp.models.remote.repository.CommentsRepo

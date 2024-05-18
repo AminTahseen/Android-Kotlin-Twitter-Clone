@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threadssocialmediaapp.databinding.HomeFeedItemBinding
 import com.example.threadssocialmediaapp.databinding.TagItemBinding
-import com.example.threadssocialmediaapp.models.dto.PostDTO
+import com.example.threadssocialmediaapp.models.remote.dto.PostDTO
 
 class TagsAdapter(private val tagsList: List<String>) :
     RecyclerView.Adapter<TagsAdapter.TagsViewHolder>() {
