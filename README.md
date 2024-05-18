@@ -1,4 +1,4 @@
-# Twitter / Thread Clone 
+# Twitter / X Clone 
 MVVM, Kotlin, XML, Navigation component
 (Development in progress...)
 
