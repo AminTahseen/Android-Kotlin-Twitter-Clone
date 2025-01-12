@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.threadssocialmediaapp.base.BaseViewModel
 import com.example.threadssocialmediaapp.models.local.model.SearchHistoryItem
 import com.example.threadssocialmediaapp.models.useCases.AddToSearchHistoryUseCase
+import com.example.threadssocialmediaapp.models.useCases.DeleteItemFromHistoryUseCase
 import com.example.threadssocialmediaapp.models.useCases.GetRecentSearchHistoryUseCase
 import com.example.threadssocialmediaapp.utils.getCurrentDate
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val addToSearchHistoryUseCase: AddToSearchHistoryUseCase,
-    private val getRecentSearchHistoryUseCase: GetRecentSearchHistoryUseCase
+    private val getRecentSearchHistoryUseCase: GetRecentSearchHistoryUseCase,
+    private val deleteItemFromHistoryUseCase: DeleteItemFromHistoryUseCase
 ) : BaseViewModel<SearchEvents>() {
 
 
@@ -65,6 +67,23 @@ class SearchViewModel @Inject constructor(
                 .collect {
                     withContext(Dispatchers.Main) {
                         callEvent(SearchEvents.NavigateToSearchList(tag))
+                        callEvent(SearchEvents.None)
+                    }
+                }
+        }
+    }
+
+    fun deleteItemFromHistory(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteItemFromHistoryUseCase(id).catch {
+                withContext(Dispatchers.Main) {
+                    callEvent(SearchEvents.ShowMessage("An error occurred"))
+                    callEvent(SearchEvents.None)
+                }
+            }
+                .collect {
+                    withContext(Dispatchers.Main) {
+                        callEvent(SearchEvents.ShowDeleteSuccess)
                         callEvent(SearchEvents.None)
                     }
                 }

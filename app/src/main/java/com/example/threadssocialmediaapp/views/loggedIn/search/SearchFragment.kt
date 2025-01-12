@@ -61,7 +61,18 @@ class SearchFragment : Fragment() {
                     is SearchEvents.GetSearchHistoryList -> {
                         searchHistoryAdapter.addItems(it.list)
                     }
+                    is SearchEvents.ShowDeleteSuccess->{
+                        searchViewModel.getRecentSearchHistory()
+                        activity?.let { it1 ->
+                            showToast(
+                                it1,
+                                layoutInflater,
+                                "Removed from history",
+                                R.layout.custom_toast_blue_message
+                            )
+                        }
 
+                    }
                     else -> {
 
                     }
@@ -115,14 +126,7 @@ class SearchFragment : Fragment() {
         val offsetY = view.height-40
         popup.showAsDropDown(view, offsetX, offsetY)
         layout.setOnClickListener {
-            activity?.let { it1 ->
-                showToast(
-                    it1,
-                    layoutInflater,
-                    "Removed from history",
-                    R.layout.custom_toast_blue_message
-                )
-            }
+                searchViewModel.deleteItemFromHistory(id)
             popup.dismiss()
         }
     }

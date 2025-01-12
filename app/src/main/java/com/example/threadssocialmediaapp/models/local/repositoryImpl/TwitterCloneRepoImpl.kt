@@ -21,4 +21,9 @@ class TwitterCloneRepoImpl(private val twitterCloneDao: TwitterCloneDao) :
         return flow { emit(1) }
 
     }
+
+    override suspend fun deleteItemFromSearchHistory(id: Int): Flow<Int> {
+        twitterCloneDao.deleteById(id)
+        return flow { emit(1) }
+    }
 }

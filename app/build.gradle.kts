@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.example.threadssocialmediaapp"
-    compileSdk = 34
+    compileSdk = 35
 
     val properties = Properties()
     properties.load(project.rootProject.file("local.properties").inputStream())

@@ -18,4 +18,7 @@ interface TwitterCloneDao {
 
     @Query("SELECT COUNT(*) FROM SearchHistoryItem WHERE searchHistoryTag = :value AND searchedHistoryByUserId=:userId")
     suspend fun isValuePresent(value: String,userId:String): Int
+
+    @Query("DELETE FROM SearchHistoryItem WHERE id = :id")
+    suspend fun deleteById(id: Int)
 }

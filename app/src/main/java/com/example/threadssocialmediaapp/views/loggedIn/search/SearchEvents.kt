@@ -7,5 +7,6 @@ sealed class SearchEvents {
     data class GetSearchHistoryList(val list: List<SearchHistoryItem>) : SearchEvents()
     data class NavigateToSearchList(val tag: String) : SearchEvents()
     data class ShowMessage(val message: String) : SearchEvents()
+    data object ShowDeleteSuccess:SearchEvents()
     data object None : SearchEvents()
 }
